@@ -2,7 +2,6 @@ import json
 import specter
 import random
 from tqdm import tqdm
-from ipdb import set_trace
 from datasets import load_dataset, load_from_disk
 from nltk.tokenize.punkt import PunktSentenceTokenizer
 from constants import DATA_DIR
@@ -87,17 +86,13 @@ def main():
                 top_sentences = specter.calculate_similarity(res, target_sent)
                 all_responses[doc_id + "-" + sent_id] = top_sentences
 
+        val = DATA_DIR / f"fewshots/ncbi/val_k15_seed{seed}_spectre.json"
+        val.parent.mkdir(parents=True, exist_ok=True)
         print("Saving JSON")
-        with open(
-            DATA_DIR / "fewshots/ncbi/val_k15_seed{seed}_spectre.json",
-            "w",
-        ) as f:
+        with open(val, "w") as f:
             json.dump(all_responses, f)
 
-        with open(
-            DATA_DIR / "fewshots/ncbi/train_15_seed{seed}_spectre.json",
-            "w",
-        ) as f:
+        with open(DATA_DIR / f"fewshots/ncbi/train_15_seed{seed}_spectre.json", "w") as f:
             json.dump(res, f)
 
 

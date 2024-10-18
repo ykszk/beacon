@@ -73,6 +73,12 @@ To create the shots run
 
 `fewshot/shot_selection` for each dataset and save these samples in DATA_DIR. Use this to run the `fewshot_def_aug`.
 
+```shell
+PYTHONPATH=. python3 ./fewshot/shot_selection/ncbi.py
+PYTHONPATH=. python3 ./finetuning_data/make_data.py
+```
+Now, there should be json files in `data/fewshots/ncbi/` and `data/ft_data/ncbi/ft_full_method2_test.csv`.
+
 ## Evaluation
 To process the evaluation scrips, there are two different formats (JSON/CODE) which can be done using the following command:
 
@@ -87,6 +93,12 @@ OUTPUT_TYPE: eval_code, eval_json
 DATATSET: cdr, chemprot, ncbi, medm, pico, chia
 
 ## Finetuned Model
+
+### Prepare???
+
+```shell
+cp data/fewshots/ncbi/val_k15_seed42_spectre.json data/fewshots/ncbi/test_k15_seed42_spectre.json   
+```
 
 ### Data Formatting 
 To create the data with he 5 shots we have used to fo few-shot run `finetuing_data/make_data.py`. These files follow the CoNLL 2003 format and consist of four space-separate columns. Each word must be placed in a separate line, with the four columns containing the word itself, its POS tag, its syntactic chunk tag, and its named entity tag. After each sentence, there must be an empty line. An example sentence would look as follows:

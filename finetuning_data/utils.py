@@ -1,7 +1,4 @@
-import random
-import pandas as pd
 import ast
-from ipdb import set_trace
 from collections import defaultdict
 from contextlib import ContextDecorator
 import time
@@ -33,7 +30,7 @@ class timeit(ContextDecorator):
 class OutputFormatter(object):
     def __init__(self, dataset, seed, split) -> None:
 
-        path = DATA_DIR / f"fewshots/{dataset}/{split}_15_seed{seed}_spectre.json"  
+        path = DATA_DIR / f"fewshots/{dataset}/{split}_k15_seed{seed}_spectre.json"
         print(path)     
         with open(path) as user_file:
             file = user_file.read()
@@ -42,16 +39,13 @@ class OutputFormatter(object):
         self.dataset = dataset
         self.seed = seed
 
-    def format_output(self, k):
+    def format_output(self, k=None):
         formatted_shots = {}
 
-        try:
+        if k:
             top_shots = take(k, self.random_k_examples.items())
-
-        except:
-            set_trace()
-            pass
-            
+        else:
+            top_shots = list(self.random_k_examples.items())
 
         if self.dataset == "cdr":
             for i in range(len(top_shots)):
@@ -136,7 +130,7 @@ class OutputFormatter(object):
 
                 elif isinstance(top_shots[i], tuple):
                     item_id = top_shots[i][0]
-                    item_stuff = top_shots[i][1]
+                    item_stuff = top_shots[i][1][0] # TODO: Not sure if [0] is right
 
                 elif isinstance(top_shots[i], dict):
                     item_id = top_shots[i]["doc_id+sent_id"]
@@ -145,10 +139,7 @@ class OutputFormatter(object):
                 each_shot = defaultdict(list)
                 each_shot["id"] = item_id
                 each_shot["text"] = item_stuff["text"]
-
-
-                for j in range(len(item_stuff["entities"])):
-                    each_shot["entities"].append(item_stuff["entities"][j])
+                each_shot["entities"] = item_stuff["entities"]
 
                 formatted_shots[i] = each_shot
 

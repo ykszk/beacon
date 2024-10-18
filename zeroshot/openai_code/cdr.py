@@ -35,13 +35,11 @@ def main():
         all_responses[iid] = sent_response
         count += 1
 
-        if count == len(dataset):
-            print(f"Num of test datapoints: {count}")
-            with open(
-                OUTPUT_DIR / f"/final_zs/cdr/gpt/zs_text_code_{count}.json",
-                "w",
-            ) as f:
-                json.dump(all_responses, f)
+    print(f"Num of test datapoints: {count}")
+    path = OUTPUT_DIR / f"final_zs/cdr/gpt/zs_text_code_{count}.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w",) as f:
+        json.dump(all_responses, f)
 
 
 if __name__ == "__main__":

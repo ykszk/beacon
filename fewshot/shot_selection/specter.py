@@ -1,18 +1,12 @@
-import pickle
 import torch
 import numpy as np
-from ipdb import set_trace
-from tqdm import tqdm
 from sklearn.metrics.pairwise import cosine_similarity
-from transformers import AutoAdapterModel, AutoTokenizer
+from transformers import AutoTokenizer
+from adapters import AutoAdapterModel
 
-tokenizer = AutoTokenizer.from_pretrained("allenai/specter2")
-model = AutoAdapterModel.from_pretrained("allenai/specter2")
-
-adapter_name = model.load_adapter(
-    "allenai/specter2_proximity", source="hf", set_active=True
-)
-
+tokenizer = AutoTokenizer.from_pretrained('allenai/specter2_base')
+model = AutoAdapterModel.from_pretrained('allenai/specter2_base')
+model.load_adapter("allenai/specter2", source="hf", load_as="specter2", set_active=True)
 
 def calculate_similarity(train_data, sentence):
     # Create lists to store the train and test sentences
