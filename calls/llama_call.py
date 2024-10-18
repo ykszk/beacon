@@ -2,7 +2,6 @@ import ast
 import together
 import time
 import os
-from ipdb import set_trace
 
 together.api_key = os.getenv("TOGETHER_API_KEY")
 model = "togethercomputer/llama-2-70b-chat"
@@ -24,7 +23,7 @@ def generate_text(user_input, temperature, max_tokens):
      
     except Exception as e:
         retry_time = e.retry_after if hasattr(e, "retry_after") else 30
-        print(f"Type Error. Retrying in{retry_time} seconds...")
+        print(f"Error {e}. Retrying in {retry_time} seconds...")
         time.sleep(retry_time)
         return generate_text(user_input, temperature, max_tokens)
 

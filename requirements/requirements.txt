@@ -53,7 +53,8 @@ cymem==2.0.8
     #   preshed
     #   spacy
     #   thinc
-datasets==2.14.4
+# Manually updated to address `NotImplementedError: Loading a dataset cached in a LocalFileSystem is not supported`
+datasets==3.0.1
     # via -r requirements/requirements.in
 deepspeed==0.14.0
     # via -r requirements/requirements.in
@@ -387,6 +388,12 @@ xxhash==3.4.1
     # via datasets
 yarl==1.9.4
     # via aiohttp
+
+# manually added. version was guessed from trial and error
+openai==0.28.1
+
+# manually added
+bioc==2.1
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

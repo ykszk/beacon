@@ -28,6 +28,20 @@ Additionally for `CHIA` dataset, we create train, validation and test splits wit
 
 To run Definition Augmentation, please make sure you generte subsampled data using the Article IDs from `data` and then change the paths.
 
+## API key
+
+Set environment variable `${MODEL}_API_KEY` (e.g. `OPENAI_API_KEY` and `TOGETHER_API_KEY`) to use APIs
+
+Windows
+```cmd
+set OPENAI_API_KEY "<your secret key>"
+```
+
+Linux or Mac
+```bash
+ export OPENAI_API_KEY=<your secret key>
+```
+
 ## Inference with open-sourced and closed-sourced models
 
 
@@ -44,6 +58,14 @@ TYPE: zeroshot, fewshot, zeroshot_def_aug, fewshot_def_aug
 MODEL: openai, llama, claude
 <br>
 DATATSET: cdr, chemprot, ncbi, medm, pico, chia
+
+### Zeroshot
+
+Examples
+```
+make run TYPE=zeroshot MODEL=openai_code DATASET=cdr
+make run TYPE=zeroshot MODEL=llama_code DATASET=cdr_code
+```
 
 ### Fewshot 
 
